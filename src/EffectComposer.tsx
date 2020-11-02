@@ -21,6 +21,7 @@ export type EffectComposerProps = {
   renderPriority?: number
   camera?: THREE.Camera
   scene?: THREE.Scene
+  shouldRender?: boolean
 }
 
 const EffectComposer = React.memo(
@@ -35,6 +36,7 @@ const EffectComposer = React.memo(
         stencilBuffer,
         multisampling = 8,
         frameBufferType = HalfFloatType,
+        shouldRender = true,
       }: EffectComposerProps,
       ref
     ) => {
@@ -59,7 +61,11 @@ const EffectComposer = React.memo(
       }, [camera, gl, depthBuffer, stencilBuffer, multisampling, frameBufferType, scene])
 
       useEffect(() => composer?.setSize(size.width, size.height), [composer, size])
-      useFrame((_, delta) => composer.render(delta), renderPriority)
+      useFrame((_, delta) => {
+        if (shouldRender) {
+          composer.render(delta)
+        }
+      }, renderPriority)
 
       const group = useRef()
       useEffect(() => {

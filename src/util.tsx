@@ -33,9 +33,16 @@ export const useVector2 = (props: any, key: string): Vector2 => {
   }, [vec])
 }
 
+/**
+ * @deprecated can cause too many webGL Context error, instead this should be let for dev to check,
+ * or attempt to get from existing canvas
+ */
 export const isWebGL2Available = () => {
   try {
-    var canvas = document.createElement('canvas')
+    const canvas = document.querySelector('canvas')
+    if (!canvas) {
+      return false
+    }
     return !!(window.WebGL2RenderingContext && canvas.getContext('webgl2'))
   } catch (e) {
     return false

@@ -22,4 +22,6 @@ export * from './effects/Texture'
 export * from './effects/ToneMapping'
 export * from './effects/Vignette'
 
+export * from './util'
+
 export { default as EffectComposer, EffectComposerContext } from './EffectComposer'
